@@ -1,7 +1,5 @@
 trigger:
-  branches:
-    include:
-      - master  # Or use a different branch for destruction
+  - master  # Or use a different branch for destruction
  
 pool:
   vmImage: 'ubuntu-latest'
