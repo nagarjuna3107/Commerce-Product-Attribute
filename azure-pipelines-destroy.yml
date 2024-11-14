@@ -1,0 +1,33 @@
+trigger:
+  branches:
+    include:
+      - master  # Or use a different branch for destruction
+ 
+pool:
+  vmImage: 'ubuntu-latest'
+ 
+variables:
+  COMMERCE_TOOLS_CLIENT_ID: $(CLIENT_ID)
+  COMMERCE_TOOLS_CLIENT_SECRET: $(CLIENT_SECRET)
+  COMMERCE_TOOLS_PROJECT_KEY: $(PROJECT_KEY)
+ 
+steps:
+  - checkout: self  # Check out the GitHub repository
+ 
+  # Initialize Terraform
+  - script: terraform init
+    displayName: 'Initialize Terraform for Destroy'
+ 
+  # Run Terraform Plan with Destroy flag to preview deletion
+  - script: |
+      terraform plan -destroy -var "client_id=$(CLIENT_ID) \
+                                 -var "client_secret=$(CLIENT_SECRET)" \
+                                 -var "project_key=$(PROJECT_KEY)"
+    displayName: 'Terraform Plan (Destroy)'
+ 
+  # Destroy Terraform resources
+  - script: |
+      terraform destroy -auto-approve -var "client_id=$(CLIENT_ID)" \
+                                       -var "client_secret=$(CLIENT_SECRET)" \
+                                       -var "project_key=$(PROJECT_KEY)"
+    displayName: 'Terraform Destroy'
