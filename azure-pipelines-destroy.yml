@@ -19,13 +19,13 @@ steps:
   # Run Terraform Plan with Destroy flag to preview deletion
   - script: |
       terraform plan -destroy -var "client_id=$(CLIENT_ID) \
-                       -var "client_secret=$(CLIENT_SECRET)" \
-                       -var "project_key=$(PROJECT_KEY)"
+      terraform plan -destroy -var "client_secret=$(CLIENT_SECRET)" \
+      terraform plan -destroy -var "project_key=$(PROJECT_KEY)"
     displayName: 'Terraform Plan (Destroy)'
  
   # Destroy Terraform resources
   - script: |
       terraform destroy -auto-approve -var "client_id=$(CLIENT_ID)" \
-                          -var "client_secret=$(CLIENT_SECRET)" \
-                          -var "project_key=$(PROJECT_KEY)"
+      terraform destroy -auto-approve -var "client_secret=$(CLIENT_SECRET)" \
+      terraform destroy -auto-approve -var "project_key=$(PROJECT_KEY)"
     displayName: 'Terraform Destroy'
